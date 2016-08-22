@@ -1,2 +1,2 @@
 # RestfulAPI
-# Jersey
+# Jersey + MyBatis
