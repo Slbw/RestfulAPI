@@ -1,10 +1,14 @@
 package com.ifxme.api.resouces;
 
+import com.ifxme.api.DBUtils;
 import com.ifxme.api.Response;
 import com.ifxme.api.User;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.sql.SQLException;
 
 /**
  * Created by Slbw on 2016/8/22.
@@ -45,10 +49,20 @@ public class Hello {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/user")
     public Response testParam(@QueryParam("userId") int userId) {
-        User user=new User();
-        user.setId(userId);
-        user.setName("小明");
-        user.setAge(23);
-        return new Response(1,user);
+//        User user=new User();
+//        user.setId(userId);
+//        user.setName("小明");
+//        user.setAge(23);
+
+        QueryRunner runner = new QueryRunner();
+        ;
+        String sql = "select id,username,age from person where id=?";
+        User user = null;
+        try {
+            user = runner.query(DBUtils.getConnection(), sql, new BeanHandler<User>(User.class), userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Response(1, user);
     }
 }
