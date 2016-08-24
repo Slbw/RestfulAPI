@@ -17,17 +17,17 @@ public class DBUtils {
     // mysql的驱动类
     public static String DRIVER;
 
-    private static ResourceBundle rb = ResourceBundle.getBundle("com.ifxme.api.db-config");
+//    private static ResourceBundle rb = ResourceBundle.getBundle("db-config");
 
     private DBUtils() {
     }
 
     // 使用静态块加载驱动程序
     static {
-        URL = rb.getString("jdbc.url");
-        USERNAME = rb.getString("jdbc.username");
-        PASSWORD = rb.getString("jdbc.password");
-        DRIVER = rb.getString("jdbc.driver");
+        URL = "jdbc:mysql://ifxme.com:3306/ifxme";//rb.getString("jdbc.url");
+        USERNAME = "root";//rb.getString("jdbc.username");
+        PASSWORD = "123456";//rb.getString("jdbc.password");
+        DRIVER = "com.mysql.jdbc.Driver";//rb.getString("jdbc.driver");
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {

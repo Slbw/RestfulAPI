@@ -56,7 +56,7 @@ public class Hello {
 
         QueryRunner runner = new QueryRunner();
         ;
-        String sql = "select id,username,age from person where id=?";
+        String sql = "select id,username,age from user where id=?";
         User user = null;
         try {
             user = runner.query(DBUtils.getConnection(), sql, new BeanHandler<User>(User.class), userId);
