@@ -5,10 +5,13 @@ import com.ifxme.api.Response;
 import com.ifxme.api.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by Slbw on 2016/8/22.
@@ -45,14 +48,11 @@ public class Hello {
         return "info," + id;
     }
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list")
-    public Response testParam(@QueryParam("userId") int userId) {
-//        User user=new User();
-//        user.setId(userId);
-//        user.setName("小明");
-//        user.setAge(23);
+    @Path("/getUser")
+    public Response getUserById(@QueryParam("userId") int userId) {
 
         QueryRunner runner = new QueryRunner();
         ;
@@ -64,5 +64,22 @@ public class Hello {
             e.printStackTrace();
         }
         return new Response(1, user);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/list")
+    public Response getUserList() {
+
+        QueryRunner runner = new QueryRunner();
+        ;
+        String sql = "select id,username,age from user";
+        List<User> users = null;
+        try {
+            users = (List<User>) runner.query(DBUtils.getConnection(), sql, new BeanListHandler(User.class));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Response(1, users);
     }
 }
