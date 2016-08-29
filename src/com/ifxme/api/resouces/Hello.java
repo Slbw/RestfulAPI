@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by Slbw on 2016/8/22.
  */
-@Path("/hello")
+@Path("/user")
 public class Hello {
     // This method is called if TEXT_PLAIN is request
     @GET
@@ -47,7 +47,7 @@ public class Hello {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/user")
+    @Path("/list")
     public Response testParam(@QueryParam("userId") int userId) {
 //        User user=new User();
 //        user.setId(userId);
