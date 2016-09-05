@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="war" build-on-make="true" name="RestfulAPI">
-    <output-path>$USER_HOME$/Desktop</output-path>
+    <output-path>$PROJECT_DIR$/..</output-path>
     <root id="archive" name="RestfulAPI.war">
       <element id="javaee-facet-resources" facet="RestfulAPI/web/Web" />
       <element id="directory" name="WEB-INF">
@@ -27,6 +27,7 @@
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.18.1-GA" />
           <element id="library" level="project" name="commons-dbutils-1.6" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.39-bin" />
         </element>
       </element>
     </root>
