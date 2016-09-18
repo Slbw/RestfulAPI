@@ -11,6 +11,7 @@ public class User implements Serializable{
     private int id;
     private String name;
     private String phone;
+    private int roleId;
     private String role;
     private int sex;
 
@@ -41,19 +42,27 @@ public class User implements Serializable{
         this.name = name;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public int getSex() {
         return sex;
     }
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

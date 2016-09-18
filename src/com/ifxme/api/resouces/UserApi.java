@@ -25,12 +25,13 @@ public class UserApi {
 
         QueryRunner runner = new QueryRunner();
         ;
-        String sql = "select a.id,a.name,a.phone,b.role from user a,role b where b.id=a.roleId ";
+        String sql = "select a.id,a.userName,a.phone,b.role,a.roleId from user a,role b where b.id=a.roleId ";
         List<User> users = null;
         try {
             users = (List<User>) runner.query(DBUtils.getConnection(), sql, new BeanListHandler(User.class));
         } catch (SQLException e) {
             e.printStackTrace();
+            return new Response(0, "获取失败");
         }
         return new Response(1, users);
     }
@@ -42,7 +43,7 @@ public class UserApi {
 
         QueryRunner runner = new QueryRunner();
 
-        String sql = "select a.id,a.name,a.phone,b.role from user a,role b where b.id=a.roleId and a.id=?";
+        String sql = "select a.id,a.userName,a.phone,b.role from user a,role b where b.id=a.roleId and a.id=?";
         User user = null;
         try {
             user = runner.query(DBUtils.getConnection(), sql, new BeanHandler<User>(User.class), userId);
@@ -67,13 +68,14 @@ public class UserApi {
     public Response insertUser(@QueryParam("userId") int userId) {
 
         //检测是不是管理员
-        return new Response(1, null);
+        return new Response(0, "不是管理员");
     }
 
     @Path("/delete")
-    public void deleteUser(@QueryParam("userId") int userId)
+    public Response deleteUser(@QueryParam("userId") int userId)
     {
-
+        //检测是不是管理员
+        return new Response(1, "删除成功");
     }
 
 
@@ -82,7 +84,7 @@ public class UserApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response doLogin(@QueryParam("phone") String phone, @QueryParam("password") String password) {
         QueryRunner runner = new QueryRunner();
-        String sql = "select a.id,a.name,a.phone,b.role from user a,role b where b.id=a.roleId and (a.phone=? and a.password=?)";
+        String sql = "select a.id,a.userName,a.phone,b.role from user a,role b where b.id=a.roleId and (a.phone=? and a.password=?)";
         User user = null;
         try {
             user = runner.query(DBUtils.getConnection(), sql, new BeanHandler<User>(User.class), phone, password);
