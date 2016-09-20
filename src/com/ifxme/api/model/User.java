@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class User implements Serializable{
 
     private int id;
-    private String name;
+    private String userName;
     private String phone;
     private int roleId;
     private String role;
@@ -34,13 +34,6 @@ public class User implements Serializable{
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getSex() {
         return sex;
@@ -64,5 +57,13 @@ public class User implements Serializable{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
