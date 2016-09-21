@@ -42,7 +42,7 @@ public class TaskAPI {
     @Path("/insert")
     @Produces(MediaType.APPLICATION_JSON)
     public Response insertTask(@QueryParam("createrId") int createrId, @QueryParam("taskName") String taskName, @QueryParam("taskDesc") String taskDesc,
-                               @QueryParam("beginTime") long beginTime, @QueryParam("type") int type,@QueryParam("taskRemark") String taskRemark, @QueryParam("staffId") int staffId) {
+                               @QueryParam("beginTime") long beginTime, @QueryParam("type") int type, @QueryParam("taskRemark") String taskRemark, @QueryParam("staffId") int staffId) {
 
         QueryRunner runner = new QueryRunner();
         String sql = "insert into task(taskName,taskDesc,taskRemark,staffId,beginTime,createrId,type) values(?,?,?,?,?,?,?)";
@@ -59,8 +59,27 @@ public class TaskAPI {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/myList")
+    public Response getMyTaskList(@QueryParam("userId") int userId) {
+
+        QueryRunner runner = new QueryRunner();
+
+        String sql = "select a.id,a.taskName,a.taskDesc,a.taskRemark,a.staffId,b.userName as staffName,a.beginTime,a.createrId,a.type from task a,user b where a.staffId=b.id and a.staffId=?";
+        Object[] params = {userId};
+        List<Task> tasks = null;
+        try {
+            tasks = (List<Task>) runner.query(DBUtils.getConnection(), sql, new BeanListHandler(Task.class), params);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new Response(0, "获取失败");
+        }
+        return new Response(1, tasks);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/list")
-    public Response getUserList() {
+    public Response getTaskList() {
 
         QueryRunner runner = new QueryRunner();
 
@@ -74,7 +93,6 @@ public class TaskAPI {
         }
         return new Response(1, tasks);
     }
-
 
 
 }
