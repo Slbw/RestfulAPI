@@ -18,6 +18,7 @@ public class Response {
         this.code = code;
         if (code == CODE_SUCCESS) {
             this.data = data;
+            msg = "成功";
         } else {
             msg = (String) data;
         }
