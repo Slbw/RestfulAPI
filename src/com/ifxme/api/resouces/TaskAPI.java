@@ -41,10 +41,11 @@ public class TaskAPI {
     @GET
     @Path("/insert")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insertTask(@QueryParam("createrId") int createrId, @QueryParam("taskName") String taskName, @QueryParam("taskDesc") String taskDesc, @QueryParam("beginTime") long beginTime, @QueryParam("type") int type) {
+    public Response insertTask(@QueryParam("createrId") int createrId, @QueryParam("taskName") String taskName, @QueryParam("taskDesc") String taskDesc,
+                               @QueryParam("beginTime") long beginTime, @QueryParam("type") int type,@QueryParam("taskRemark") String taskRemark, @QueryParam("staffId") int staffId) {
 
         QueryRunner runner = new QueryRunner();
-        String sql = "insert into task(taskName,taskDesc,beginTime,createrId,type) values(?,?,?,?,?)";
+        String sql = "insert into task(taskName,taskDesc,taskRemark,staffId,beginTime,createrId,type) values(?,?,?,?,?,?,?)";
         Object[] params = {taskName, taskDesc, beginTime, createrId, type};
         try {
             runner.update(DBUtils.getConnection(), sql, params);
@@ -63,7 +64,7 @@ public class TaskAPI {
 
         QueryRunner runner = new QueryRunner();
 
-        String sql = "select a.id,a.taskName,a.taskDesc,a.beginTime,a.createrId,b.userName as createrName,a.type from task a,user b where a.createrId=b.id";
+        String sql = "select a.id,a.taskName,a.taskDesc,a.taskRemark,a.staffId,a.beginTime,a.createrId,b.userName as createrName,a.type from task a,user b where a.createrId=b.id";
         List<Task> tasks = null;
         try {
             tasks = (List<Task>) runner.query(DBUtils.getConnection(), sql, new BeanListHandler(Task.class));
@@ -75,26 +76,5 @@ public class TaskAPI {
     }
 
 
-    /**
-     * 绑定人员
-     *
-     * @return
-     */
-    @GET
-    @Path("/bindPeople")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response bindPeople(@QueryParam("taskId") int taskId, @QueryParam("bossId") int bossId, @QueryParam("staffIds") String staffIds, @QueryParam("endTime") long endTime) {
-        QueryRunner runner = new QueryRunner();
-        String sql = "insert into flow(bossId,staffIds,taskId,taskStatus,endTime) values(?,?,?,?,?)";
-        Object[] params = {taskId, staffIds, taskId, 0, endTime};
-        try {
-            runner.update(DBUtils.getConnection(), sql, params);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new Response(0, "绑定失败");
-        }
-        //todo 检测是不是管理员
-        return new Response(1, "绑定成功");
-    }
 
 }
