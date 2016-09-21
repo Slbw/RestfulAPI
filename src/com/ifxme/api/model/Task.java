@@ -13,6 +13,7 @@ public class Task {
     private long beginTime;
     private int type;
     private int staffId;
+    private int staffName;
     private String taskRemark;
 
     public int getId() {
@@ -85,5 +86,13 @@ public class Task {
 
     public void setTaskRemark(String taskRemark) {
         this.taskRemark = taskRemark;
+    }
+
+    public int getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(int staffName) {
+        this.staffName = staffName;
     }
 }

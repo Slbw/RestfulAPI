@@ -64,7 +64,7 @@ public class TaskAPI {
 
         QueryRunner runner = new QueryRunner();
 
-        String sql = "select a.id,a.taskName,a.taskDesc,a.taskRemark,a.staffId,a.beginTime,a.createrId,b.userName as createrName,a.type from task a,user b where a.createrId=b.id";
+        String sql = "select a.id,a.taskName,a.taskDesc,a.taskRemark,a.staffId,b.userName as staffName,a.beginTime,a.createrId,a.type from task a,user b where a.staffId=b.id";
         List<Task> tasks = null;
         try {
             tasks = (List<Task>) runner.query(DBUtils.getConnection(), sql, new BeanListHandler(Task.class));
